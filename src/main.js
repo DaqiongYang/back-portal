@@ -12,6 +12,19 @@ import utils from './utils'
 
 import ElementUI from 'element-ui'
 
+import ECharts from 'vue-echarts/components/ECharts'
+// 手动引入 ECharts 各模块来减小打包体积
+import 'echarts/lib/chart/pie'
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/chart/map'
+import 'echarts/map/js/china.js'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/legend'
+import 'echarts/lib/component/title'
+import 'echarts/lib/component/graphic'
+import 'echarts/lib/component/geo'
+
 // IE9+支持,全局babel-polyfill(使用babel-preset-env和useBuiltIns)
 import 'babel-polyfill'
 
@@ -25,6 +38,8 @@ Vue.use(VueAxios, axios)
 Vue.use(utils)
 
 Vue.use(ElementUI)
+
+Vue.component('chart', ECharts)
 
 Vue.config.productionTip = false
 
