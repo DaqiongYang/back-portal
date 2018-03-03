@@ -1,9 +1,9 @@
 <template>
    <div class="background-gradient">
       <div class="title">
-        <img src="../assets/img/title-left.png" alt="">
+        <img src="/static/img/title-left.png" alt="">
         &nbsp;{{ title1 }}&nbsp;
-        <img src="../assets/img/title-right.png" alt="">
+        <img src="/static/img/title-right.png" alt="">
       </div>
       <el-row :gutter="5">
         <el-col :sm="24" :md="16" :lg="12" :xl="12">
