@@ -149,7 +149,6 @@ import echart10 from './Echart10'
 import echart11 from './Echart11'
 
 export default {
-  name: 'windows',
   components: {
     echart1,
     echart2,
