@@ -6,7 +6,7 @@ const api = [
 ]
 
 const option = {
-  target: 'http://220.197.198.85:82',
+  target: null, // 代理到的远程地址
   changeOrigin: true
 }
 
