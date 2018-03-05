@@ -12,8 +12,8 @@ import beforeEachHooks from './router/before-each-hooks'
 import App from './App'
 import store from './store'
 
+import axios from 'axios'
 import VueAxios from 'vue-axios'
-import axios from './api/axios'
 
 import utils from './utils'
 
@@ -63,8 +63,51 @@ Object.keys(beforeEachHooks).forEach(hook => {
   router.beforeEach(beforeEachHooks[hook])
 })
 
+// 设置全局配置，如超时时长、根路径、头部信息等
+// https://www.npmjs.com/package/axios
+const service = axios.create({
+  timeout: 30000,
+  baseURL: process.env.API_HOST
+  // headers: {'X-Requested-With': 'XMLHttpRequest'}
+})
+
+// http request 拦截器
+service.interceptors.request.use(config => {
+  var token = store.state.token
+  if (token) {
+    // 每次请求都为http头增加Authorization字段，其内容为 token
+    config.headers.Authorization = `token ${token}`
+  }
+  return config
+}, err => {
+  return Promise.reject(err)
+})
+
+// http response 响应拦截器
+service.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    // 异常的全局处理
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          router.replace({
+            path: '/login',
+            query: { redirect: router.currentRoute.fullPath }
+          })
+          break
+        default:
+          break
+      }
+    }
+    return Promise.reject(error.response)
+  }
+)
+
 // 组件中使用 this.$http 调用 axios
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, service)
 
 // 组件中使用 this.$utils 调用全局方法
 Vue.use(utils)

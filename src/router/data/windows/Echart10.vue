@@ -185,7 +185,6 @@ export default {
   },
   methods: {
     fillSeries(items) {
-      console.log('fillSeries(items)')
       items.forEach(function (item, i) {
         series.push(
           {
