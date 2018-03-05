@@ -91,7 +91,7 @@ export default {
                 position: 'left'
               }
             },
-            data: [490]
+            data: []
           },
           {
             name: '女',
@@ -104,7 +104,7 @@ export default {
                 position: 'right'
               }
             },
-            data: [308]
+            data: []
           },
           // These series are in the second grid.
           {
@@ -119,10 +119,24 @@ export default {
                 position: 'right'
               }
             },
-            data: [620, 468, 82]
+            data: []
           }
         ]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART4, { params: this.params }).then(res => {
+        this.polar.series[1].data = res.data.male
+        this.polar.series[2].data = res.data.female
+        this.polar.series[3].data = res.data.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

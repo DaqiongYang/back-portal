@@ -5,8 +5,8 @@ import store from '../store'
 // 设置全局配置，如超时时长、根路径、头部信息等
 // https://www.npmjs.com/package/axios
 const service = axios.create({
-  timeout: 30000
-  // baseURL: 'https://some-domain.com/api/',
+  timeout: 30000,
+  baseURL: process.env.API_HOST
   // headers: {'X-Requested-With': 'XMLHttpRequest'}
 })
 

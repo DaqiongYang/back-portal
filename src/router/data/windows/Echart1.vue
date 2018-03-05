@@ -10,12 +10,11 @@ export default {
         color: ['#3bb4e8', '#c7a11e', '#c35060'],
         tooltip: {
           trigger: 'item',
-          formatter: '{a}<br/>{b}共{c}人'
+          formatter: '{a}<br/>{b}共{c}万人'
         },
         legend: {
           x: 'center',
           y: '80%',
-          data: [{ name: '0-15岁\n40%', icon: 'rect' }, { name: '16-20岁\n42%', icon: 'rect' }, { name: '60岁以上\n18%', icon: 'rect' }],
           itemWidth: 12,
           itemHeight: 25,
           textStyle: {
@@ -47,21 +46,29 @@ export default {
               position: 'center',
               emphasis: {
                 show: true,
-                formatter: '{b}\n共{c}人',
+                formatter: '{b}\n共{c}万人',
                 fontSize: '13'
               }
             },
             labelLine: {
               emphasis: { show: true }
             },
-            data: [
-              { value: 4000, name: '0-15岁\n40%' },
-              { value: 4200, name: '16-20岁\n42%' },
-              { value: 1800, name: '60岁以上\n18%' }
-            ]
+            data: []
           }
         ]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART1, { params: null }).then(res => {
+        this.polar.series[0].data = res.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
