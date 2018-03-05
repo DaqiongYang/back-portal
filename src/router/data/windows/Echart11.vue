@@ -71,11 +71,11 @@ export default {
           axisLabel: {
             color: '#87baf8'
           },
-          data: ['河北', '辽宁', '天津', '江苏', '北京', '上海', '广东', '浙江']
+          data: []
         },
         series: [
           {
-            data: [152, 221, 318, 380, 425, 534, 689, 765],
+            data: [],
             type: 'bar',
             barWidth: '58%',
             label: {
@@ -86,6 +86,19 @@ export default {
           }
         ]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART11, { params: null }).then(res => {
+        this.polar.yAxis.data = res.data.name
+        this.polar.series[0].data = res.data.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

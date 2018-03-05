@@ -59,9 +59,10 @@ export default {
             show: false
           },
           axisLabel: {
-            color: '#87baf8'
-          },
-          data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+            color: '#87baf8',
+            interval: 0,
+            rotate: 45
+          }
         },
         yAxis: {
           type: 'value',
@@ -90,7 +91,7 @@ export default {
                 position: 'inside'
               }
             },
-            data: [15800, 12000, 10000, 8000, 7000, 7300, 6500, 6000, 5500, 5000, 4500, 3000]
+            data: []
           },
           {
             name: '脱贫户',
@@ -103,10 +104,24 @@ export default {
                 position: 'inside'
               }
             },
-            data: [4800, 4000, 3500, 3800, 5000, 3700, 3000, 2800, 2500, 2000, 1000, 500]
+            data: []
           }
         ]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART6, { params: this.params }).then(res => {
+        this.polar.xAxis.data = res.data.name
+        this.polar.series[0].data = res.data.data1
+        this.polar.series[1].data = res.data.data2
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

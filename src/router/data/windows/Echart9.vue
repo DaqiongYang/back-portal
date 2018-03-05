@@ -55,7 +55,7 @@ export default {
             interval: 0,
             rotate: 45
           },
-          data: ['贵阳', '六盘水', '黔西南', '毕节', '黔东南', '黔南', '遵义', '安顺', '铜仁']
+          data: []        
         },
         yAxis: {
           boundaryGap: [0, 0.1],
@@ -77,7 +77,7 @@ export default {
           }
         },
         series: [{
-          data: [18200, 37700, 69300, 12500, 91700, 145600, 62100, 92404, 149760],
+          data: [],
           barWidth: '58%',
           label: {
             show: true,
@@ -87,6 +87,19 @@ export default {
           type: 'bar'
         }]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART9, { params: null }).then(res => {
+        this.polar.xAxis.data = res.data.name
+        this.polar.series[0].data = res.data.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

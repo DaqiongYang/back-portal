@@ -15,12 +15,6 @@ export default {
         legend: {
           x: 'center',
           y: '80%',
-          data: [
-            { name: '小学及以下\n23.3%', icon: 'rect' },
-            { name: '初中\n58%', icon: 'rect' },
-            { name: '高中\n11.1%', icon: 'rect' },
-            { name: '大专及以上\n7.6%', icon: 'rect' }
-          ],
           itemWidth: 12,
           itemHeight: 25,
           textStyle: {
@@ -59,15 +53,22 @@ export default {
             labelLine: {
               emphasis: { show: true }
             },
-            data: [
-              { value: 233000, name: '小学及以下\n23.3%' },
-              { value: 580000, name: '初中\n58%' },
-              { value: 111000, name: '高中\n11.1%' },
-              { value: 76000, name: '大专及以上\n7.6%' }
-            ]
+            data: []
           }
         ]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART3, { params: null }).then(res => {
+        this.polar.series[0].data = res.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

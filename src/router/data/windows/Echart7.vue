@@ -49,7 +49,7 @@ export default {
               color: '#012f65'
             }
           },
-          data: ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '18-1']
+          data: []
         },
         yAxis: {
           type: 'value',
@@ -67,7 +67,7 @@ export default {
           }
         },
         series: [{
-          data: [11.74, 19.76, 26.10, 33.12, 40.10, 46.68, 53.15, 55.30, 61.49, 66.96, 72.35, 6.03],
+          data: [],
           type: 'line',
           symbol: 'emptyCircle',
           symbolSize: 10,
@@ -78,6 +78,19 @@ export default {
           }
         }]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART7, { params: null }).then(res => {
+        this.polar.xAxis.data = res.data.name
+        this.polar.series[0].data = res.data.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

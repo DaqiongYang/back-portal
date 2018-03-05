@@ -119,19 +119,7 @@ var geoCoordMap = {
   '青岛': [120.4651, 36.3373],
   '韶关': [113.7964, 24.7028]
 }
-var BJData = [
-  [{ name: '贵阳' }, { name: '广州', value: 98 }],
-  [{ name: '贵阳' }, { name: '北京', value: 85 }],
-  [{ name: '贵阳' }, { name: '上海', value: 78 }],
-  [{ name: '贵阳' }, { name: '昆明', value: 75 }],
-  [{ name: '贵阳' }, { name: '福州', value: 70 }],
-  [{ name: '贵阳' }, { name: '成都', value: 60 }],
-  [{ name: '贵阳' }, { name: '济南', value: 50 }],
-  [{ name: '贵阳' }, { name: '合肥', value: 45 }],
-  [{ name: '贵阳' }, { name: '北海', value: 30 }],
-  [{ name: '贵阳' }, { name: '海口', value: 20 }],
-  [{ name: '贵阳' }, { name: '长春', value: 10 }]
-]
+
 var convertData = function (data) {
   var res = []
   for (var i = 0; i < data.length; i++) {
@@ -150,108 +138,8 @@ var convertData = function (data) {
   return res
 }
 
-var series = [];
-[
-  ['贵阳', BJData]
-].forEach(function (item, i) {
-  series.push(
-    {
-      type: 'lines',
-      zlevel: 2,
-      effect: {
-        show: true,
-        constantSpeed: 30,
-        trailLength: 0.02,
-        symbol: 'arrow',
-        symbolSize: 4
-      },
-      lineStyle: {
-        normal: {
-          width: 1,
-          opacity: 0.6,
-          curveness: 0.2
-        }
-      },
+var series = []
 
-      data: convertData(item[1])
-    }, {
-      type: 'effectScatter',
-      coordinateSystem: 'geo',
-      zlevel: 2,
-      rippleEffect: {
-
-        period: 4,
-        brushType: 'stroke',
-        scale: 4
-      },
-      label: {
-        normal: {
-          show: true,
-          position: 'right',
-          offset: [5, 0],
-          formatter: '{b}'
-        },
-        emphasis: {
-          show: true
-        }
-      },
-      symbol: 'circle',
-      symbolSize: function (val) {
-        return 4
-      },
-      itemStyle: {
-        normal: {
-          show: false,
-          color: '#f00'
-        }
-      },
-      data: item[1].map(function (dataItem) {
-        return {
-          name: dataItem[1].name,
-          value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
-        }
-      })
-    },
-    // 目的地
-    {
-      type: 'scatter',
-      coordinateSystem: 'geo',
-      zlevel: 2,
-      rippleEffect: {
-        period: 4,
-        brushType: 'stroke',
-        scale: 4
-      },
-      label: {
-        normal: {
-          show: true,
-          position: 'right',
-          // offset:[5, 0],
-          color: '#00ffff',
-          formatter: '{b}',
-          textStyle: {
-            color: '#00ffff'
-          }
-        },
-        emphasis: {
-          show: true
-        }
-      },
-      symbol: 'circle',
-      symbolSize: 10,
-      itemStyle: {
-        normal: {
-          show: true,
-          color: '#9966cc'
-        }
-      },
-      data: [{
-        name: item[0],
-        value: geoCoordMap[item[0]].concat([100])
-      }]
-    }
-  )
-})
 export default {
   data() {
     return {
@@ -290,6 +178,119 @@ export default {
 
         series: series
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    fillSeries(items) {
+      console.log('fillSeries(items)')
+      items.forEach(function (item, i) {
+        series.push(
+          {
+            type: 'lines',
+            zlevel: 2,
+            effect: {
+              show: true,
+              constantSpeed: 30,
+              trailLength: 0.02,
+              symbol: 'arrow',
+              symbolSize: 4
+            },
+            lineStyle: {
+              normal: {
+                width: 1,
+                opacity: 0.6,
+                curveness: 0.2
+              }
+            },
+            data: convertData(item[1])
+          }, {
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            zlevel: 2,
+            rippleEffect: {
+
+              period: 4,
+              brushType: 'stroke',
+              scale: 4
+            },
+            label: {
+              normal: {
+                show: true,
+                position: 'right',
+                offset: [5, 0],
+                formatter: '{b}'
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            symbol: 'circle',
+            symbolSize: function (val) {
+              return 4
+            },
+            itemStyle: {
+              normal: {
+                show: false,
+                color: '#f00'
+              }
+            },
+            data: item[1].map(function (dataItem) {
+              return {
+                name: dataItem[1].name,
+                value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
+              }
+            })
+          },
+          // 目的地
+          {
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            zlevel: 2,
+            rippleEffect: {
+              period: 4,
+              brushType: 'stroke',
+              scale: 4
+            },
+            label: {
+              normal: {
+                show: true,
+                position: 'right',
+                // offset:[5, 0],
+                color: '#00ffff',
+                formatter: '{b}',
+                textStyle: {
+                  color: '#00ffff'
+                }
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            symbol: 'circle',
+            symbolSize: 10,
+            itemStyle: {
+              normal: {
+                show: true,
+                color: '#9966cc'
+              }
+            },
+            data: [{
+              name: item[0],
+              value: geoCoordMap[item[0]].concat([100])
+            }]
+          }
+        )
+      })
+    },
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART10, { params: null }).then(res => {
+        this.fillSeries(res.data)
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

@@ -15,7 +15,6 @@ export default {
         legend: {
           x: 'center',
           y: '80%',
-          data: [{ name: '外省就业\n52.8% 618万', icon: 'rect' }, { name: '省内就业\n23.2% 272万', icon: 'rect' }, { name: '未就业\n23.9% 280万', icon: 'rect' }],
           itemWidth: 12,
           itemHeight: 25,
           textStyle: {
@@ -54,14 +53,22 @@ export default {
             labelLine: {
               emphasis: { show: true }
             },
-            data: [
-              { value: 6180000, name: '外省就业\n52.8% 618万' },
-              { value: 2720000, name: '省内就业\n23.2% 272万' },
-              { value: 2800000, name: '未就业\n23.9% 280万' }
-            ]
+            data: []
           }
         ]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART2, { params: null }).then(res => {
+        this.polar.series[0].data = res.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

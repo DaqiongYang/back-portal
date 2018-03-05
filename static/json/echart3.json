@@ -1,0 +1,22 @@
+[
+    {
+        "value": 233000,
+        "name": "小学及以下\n23.3%",
+        "icon": "rect"
+    },
+    {
+        "value": 580000        ,
+        "name": "初中\n58%",
+        "icon": "rect"
+    },
+    {
+        "value": 111000,
+        "name": "高中\n11.1%",
+        "icon": "rect"
+    },
+    {
+        "value": 76000,
+        "name": "大专及以上\n7.6%",
+        "icon": "rect"
+    }
+]

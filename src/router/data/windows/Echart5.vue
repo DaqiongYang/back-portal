@@ -57,7 +57,7 @@ export default {
             axisLabel: {
               color: '#87baf8'
             },
-            data: ['技工', '管理', '普工']
+            data: []
           }
         ],
         yAxis: [
@@ -94,7 +94,7 @@ export default {
                 distance: 10
               }
             },
-            data: [19, 16, 130]
+            data: []
           },
           {
             name: '有需求',
@@ -111,10 +111,24 @@ export default {
                 distance: 10
               }
             },
-            data: [25, 22, 187]
+            data: []
           }
         ]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART5, { params: this.params }).then(res => {
+        this.polar.xAxis[0].data = res.data.name
+        this.polar.series[0].data = res.data.data1
+        this.polar.series[1].data = res.data.data2
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

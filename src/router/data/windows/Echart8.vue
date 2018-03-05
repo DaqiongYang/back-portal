@@ -48,9 +48,8 @@ export default {
               color: '#012f65'
             }
           },
-
           boundaryGap: false,
-          data: ['2014', '2015', '2016', '2017', '2018']
+          data: []
         },
         yAxis: {
           type: 'value',
@@ -70,7 +69,7 @@ export default {
         },
 
         series: [{
-          data: [250, 508, 262, 760, 480],
+          data: [],
           type: 'line',
           symbol: 'emptyCircle',
           symbolSize: 10,
@@ -81,6 +80,19 @@ export default {
           }
         }]
       }
+    }
+  },
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$http.get(process.env.API_URL_ECHART8, { params: null }).then(res => {
+        this.polar.xAxis.data = res.data.name
+        this.polar.series[0].data = res.data.data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
