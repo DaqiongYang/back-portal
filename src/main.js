@@ -2,6 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Router from 'vue-router'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+// IE9+支持,全局babel-polyfill(使用babel-preset-env和useBuiltIns)
+import 'babel-polyfill'
+import ElementUI from 'element-ui'
+
+// 全局css
+import '@/assets/scss/index.scss'
 
 // 静态路由
 import routes from './router'
@@ -11,15 +19,9 @@ import beforeEachHooks from './router/before-each-hooks'
 
 import App from './App'
 import store from './store'
-
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-
 import utils from './utils'
-
-import ElementUI from 'element-ui'
-
 import ECharts from 'vue-echarts/components/ECharts'
+
 // 手动引入 ECharts 各模块来减小打包体积
 import 'echarts/lib/chart/pie'
 import 'echarts/lib/chart/bar'
@@ -31,15 +33,6 @@ import 'echarts/lib/component/legend'
 import 'echarts/lib/component/title'
 import 'echarts/lib/component/graphic'
 import 'echarts/lib/component/geo'
-
-// IE9+支持,全局babel-polyfill(使用babel-preset-env和useBuiltIns)
-import 'babel-polyfill'
-
-// 全局css
-import '@/assets/scss/index.scss'
-
-// 组件中使用 this.$router 调用
-Vue.use(Router)
 
 let router = new Router({
   // 去掉url上的/#/号，需要后台(nginx等)做相应配置：404时配置到/index.html，由vue的前端路由*处理
@@ -106,6 +99,9 @@ service.interceptors.response.use(
   }
 )
 
+// 组件中使用 this.$router 调用
+Vue.use(Router)
+
 // 组件中使用 this.$http 调用 axios
 Vue.use(VueAxios, service)
 
@@ -122,7 +118,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  // 暂时需要引入store,
+  store,
   components: { App },
   template: '<App/>'
 })

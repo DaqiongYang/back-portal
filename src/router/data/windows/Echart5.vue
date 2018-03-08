@@ -1,5 +1,5 @@
 <template>
-<chart :options="polar" auto-resize></chart>
+  <chart :options="polar" auto-resize @click="popDetail"></chart>
 </template>
 
 <script>
@@ -128,6 +128,16 @@ export default {
         this.polar.series[1].data = res.data.data2
       }).catch(err => {
         console.log(err)
+      })
+    },
+    popDetail(params) {
+      // alert('你点击了 ' + params.seriesName + ' 的第' + (params.dataIndex + 1) + '个数据,值为' + this.polar.series[params.seriesIndex].data[params.dataIndex] + '!')
+      this.$store.commit('popDetail/set', {
+        visible: true,
+        echartName: 'ECHART5',
+        seriesName: params.seriesName,
+        categoryName: this.polar.xAxis[0].data[params.dataIndex],
+        data: params.data
       })
     }
   }

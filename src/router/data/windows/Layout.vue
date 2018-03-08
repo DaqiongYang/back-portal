@@ -132,6 +132,7 @@
           </el-col>
         </el-col>
       </el-row>
+      <pop-detail/>
   </div>
 </template>
 
@@ -147,7 +148,7 @@ import echart8 from './Echart8'
 import echart9 from './Echart9'
 import echart10 from './Echart10'
 import echart11 from './Echart11'
-
+import popDetail from './PopDetail'
 export default {
   components: {
     echart1,
@@ -160,7 +161,8 @@ export default {
     echart8,
     echart9,
     echart10,
-    echart11
+    echart11,
+    popDetail
   },
   props: {
 
